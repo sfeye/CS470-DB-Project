@@ -6,6 +6,7 @@ import LibrarianQuery from '../components/librarian';
 import Tab from '../components/tab'
 
 function App() {
+  const axios= require('axios');
   const currentTab = useSelector((state) => state.tabChangeReducer.currentTab );
   let currentPage;
   if (currentTab === "Student") {
