@@ -1,5 +1,12 @@
-import { ADD_ARTICLE } from "../constants/action-types";
+import types from "../constants/action-types";
+// Put the actions functions here.
 
-export function addArticle(payload) {
-  return { type: ADD_ARTICLE, payload };
-}
+export function renderStudentTab() {
+  return { type: types.STUDENT_TAB}
+};
+export function renderLibrarianTab() {
+  return { type: types.LIBRARIAN_TAB}
+};
+export function renderResults() {
+  return { type: types.SEARCH_RESULTS}
+};
