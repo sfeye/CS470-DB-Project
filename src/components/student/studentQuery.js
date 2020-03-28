@@ -1,6 +1,7 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import TextField from '@material-ui/core/TextField';
+import validate from './validate';
 
 const renderTextField = (
     { input, label, meta: { touched, error }, ...custom },
@@ -57,5 +58,6 @@ const studentQuery = props => {
 );}
 
 export default reduxForm({
-    form: 'studentQuery'
+    form: 'studentQuery',
+    validate
 })(studentQuery)

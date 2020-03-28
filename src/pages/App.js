@@ -9,9 +9,11 @@ function App() {
   const currentTab = useSelector((state) => state.tabChangeReducer.currentTab );
   let currentPage;
   if (currentTab === "Student") {
-    currentPage = <StudentQuery/>;
+    currentPage = <StudentQuery onSubmit={values=> {
+    }}/>;
   }else if (currentTab === "Librarian") {
-    currentPage = <LibrarianQuery/>;
+    currentPage = <LibrarianQuery onSubmit={values=> {
+    }}/>;
   }
     return (
       <div className="App">
