@@ -51,3 +51,8 @@ create table book_history
     checkin_date date,
 	foreign key (checkout_userid) references user(userid)
 )
+
+insert into book 
+    (isbn, author, bookname, shelf_number, checkout_indicator)
+values 
+    (1234567890, "Mary Shelley", "Frankenstein", 1, 0);
