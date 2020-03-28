@@ -3,6 +3,7 @@ import '../App.css';
 import { useSelector } from 'react-redux';
 import StudentQuery from '../components/student';
 import LibrarianQuery from '../components/librarian';
+import Tab from '../components/tab'
 
 function App() {
   const currentTab = useSelector((state) => state.tabChangeReducer.currentTab );
@@ -15,6 +16,7 @@ function App() {
     return (
       <div className="App">
         <h1>{currentTab}</h1>
+        <Tab/>
         {currentPage}
       </div>
     );
