@@ -27,7 +27,7 @@ const librarianQuery = props => {
                         <Field
                             name="employeeID"
                             component={renderTextField}
-                            label="Employee ID#"
+                            label="Employee ID"
                         />
                     </div>
                     <div>

@@ -46,14 +46,20 @@ export default function tab() {
   const dispatch = useDispatch();
   const handleChange = (event, newValue) => {
     setValue(newValue);
+    if(newValue === 0) {
+      dispatch(renderStudentTab());
+    }
+    if(newValue === 1) {
+      dispatch(renderLibrarianTab());
+    }
   };
 
   return (
     <div className={classes.root}>
       <AppBar position="static">
         <Tabs value={value} onChange={handleChange} centered>
-          <Tab label="Student"/>
-          <Tab label="Librarian"/>
+          <Tab label="Student" />
+          <Tab label="Librarian" />
           <Tab label="Check out"/>
         </Tabs>
       </AppBar>
