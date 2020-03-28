@@ -7,6 +7,9 @@ export function renderStudentTab() {
 export function renderLibrarianTab() {
   return { type: types.LIBRARIAN_TAB}
 };
+export function renderCheckOutTab() {
+  return { type: types.CHECKOUT_TAB}
+};
 export function renderResults() {
   return { type: types.SEARCH_RESULTS}
 };

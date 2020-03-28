@@ -17,7 +17,7 @@ const renderTextField = (
     />
   );
 
-const librarianQuery = props => {
+const checkOut = props => {
     const { handleSubmit, pristine, submitting } = props
     return (
         <div>
@@ -44,6 +44,13 @@ const librarianQuery = props => {
                             label="Email"
                         />
                     </div>
+                    <div>
+                        <Field
+                            name="ISBN"
+                            component={renderTextField}
+                            label="ISBN"
+                        />
+                    </div>
                     <div style={{padding: "10px"}}>
                         <button
                         type="submit"
@@ -59,6 +66,6 @@ const librarianQuery = props => {
 }
 
 export default reduxForm({
-    form: 'librarianQuery',
+    form: 'checkOut',
     validate
-})(librarianQuery)
+})(checkOut)

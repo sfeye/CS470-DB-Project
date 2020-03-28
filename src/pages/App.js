@@ -3,6 +3,7 @@ import '../App.css';
 import { useSelector } from 'react-redux';
 import StudentQuery from '../components/student';
 import LibrarianQuery from '../components/librarian';
+import CheckOut from '../components/checkOut'
 import Tab from '../components/tab'
 
 function App() {
@@ -14,6 +15,9 @@ function App() {
     }}/>;
   }else if (currentTab === "Librarian") {
     currentPage = <LibrarianQuery onSubmit={values=> {
+    }}/>;
+  }else if (currentTab === "Check Out") {
+    currentPage = <CheckOut onSubmit={values=> {
     }}/>;
   }
     return (

@@ -19,6 +19,12 @@ function rootReducer(state = initialState, action) {
         currentPage: "Query"
       }
     }
+    case types.CHECKOUT_TAB: {
+      return {
+        currentTab: "Check Out",
+        currentPage: "Query"
+      }
+    }
     case types.SEARCH_RESULTS: {
       return {
         currentPage: "Results"
