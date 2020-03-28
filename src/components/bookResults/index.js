@@ -1,3 +1,3 @@
-import studentResults from './studentResults';
+import studentResult from './studentResult';
 
-export default studentResults;
+export default studentResult;

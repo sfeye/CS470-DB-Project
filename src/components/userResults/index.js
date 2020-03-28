@@ -1,3 +1,3 @@
-import librarianResults from './librarianResults';
+import librarianResult from './librarianResult';
 
-export default librarianResults;
+export default librarianResult;

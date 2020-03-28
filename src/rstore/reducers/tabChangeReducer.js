@@ -27,6 +27,7 @@ function rootReducer(state = initialState, action) {
     }
     case types.SEARCH_RESULTS: {
       return {
+        currentTab: action.payload.prevTab,
         currentPage: "Results"
       }
     }
