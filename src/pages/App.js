@@ -11,13 +11,21 @@ import {renderResults} from '../rstore/actions'
 
 function App() {
   const axios= require('axios');
+  const instance = axios.create({baseURL: 'http://localhost:3001'})
   const dispatch= useDispatch();
   const currentTab = useSelector((state) => state.tabChangeReducer.currentTab );
   const currentPage = useSelector((state) => state.tabChangeReducer.currentPage);
   let displayTab;
   if (currentTab === "Student") {
     displayTab = <StudentQuery onSubmit={values=> {
-      dispatch(renderResults("Student"));
+      instance.get("/book?ISBN=" + values.ISBN)
+      .then(function(response) {
+        console.log(response);
+        dispatch(renderResults("Student"));
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
     }}/>;
   }else if (currentTab === "Librarian") {
     displayTab = <LibrarianQuery onSubmit={values=> {

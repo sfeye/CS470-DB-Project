@@ -14,3 +14,12 @@ export const renderResults = prevTab => ({
    type: types.SEARCH_RESULTS,
    payload: {prevTab},
 });
+
+export const fetchBooks = books => ({
+  type: types.FETCH_BOOK_RESULTS,
+  payload: {books},
+});
+export const fetchUsers = users => ({
+  type: types.FETCH_USER_RESULTS,
+  payload: {users},
+});

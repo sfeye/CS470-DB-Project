@@ -14,16 +14,29 @@ const connection = mysql.createPool({
 
 /* GET users listing. */
 router.get("/", function(req, res, next) {
+  var ISBN = req.query.ISBN;
+  var author = req.query.author;
+  var title = req.query.bookname;
   connection.getConnection(function(err, connection) {
     if (err) throw err
 
-    connection.query('SELECT * from book', function (err, results) {
-      if (err) throw err
-    
-      res.send(results)
-      connection.release();
-      return;
-    });
+    if (ISBN !== undefined) {
+        connection.query("SELECT isbn, bookname, author, shelf_number, checkout_indicator from book WHERE ISBN = '" + ISBN + "';", 
+        function (err, results) {
+          if (err) throw err
+          res.send(results)
+          return;
+      });
+    } else {
+      connection.query("SELECT isbn, bookname, author, shelf_number, checkout_indicator from book WHERE bookname = '" + title + 
+      "' AND author = '" + author + "';", 
+      function (err, results) {
+        if (err) throw err
+        res.send(results)
+        console.log(title)
+        return;
+      });
+    }
   });
 });
 
