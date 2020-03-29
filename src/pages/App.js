@@ -17,20 +17,27 @@ function App() {
   let displayTab;
   if (currentTab === "Student") {
     displayTab = <StudentQuery onSubmit={values=> {
-      axios.get("/book?ISBN=" + values.ISBN, {withCredentials: true})
+      axios.get("/", {withCredentials: true})
       .then(function(response) {
-        console.log(response);
+        console.log(response.data);
         dispatch(fetchBooks(response.data))
         dispatch(renderResults("Student"));
       })
       .catch(function(error) {
-        dispatch(renderResults("Student"));
         console.log(error);
       });
     }}/>;
   }else if (currentTab === "Librarian") {
     displayTab = <LibrarianQuery onSubmit={values=> {
-      dispatch(renderResults("Librarian"));
+      axios.get("/", {withCredentials: true})
+      .then(function(response) {
+        console.log(response.data);
+        dispatch(fetchUsers(response.data))
+        dispatch(renderResults("Librarian"));
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
     }}/>;
   }else if (currentTab === "Check Out") {
     displayTab = <CheckOut onSubmit={values=> {
