@@ -12,7 +12,7 @@ const connection = mysql.createPool({
 });
 
 /* GET users listing. */
-router.get("/:ISBN", function(req, res, next) {
+router.get("/ISBN", function(req, res, next) {
   var ISBN = req.params.ISBN;
   console.log("method:" + req.method);
   console.log("body:" + ISBN);
