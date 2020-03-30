@@ -7,6 +7,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import { useSelector } from 'react-redux';
 
 const useStyles = makeStyles({
   table: {
@@ -18,16 +19,26 @@ function createData(ISBN, bookname, author, checkout_date, checkin_date) {
   return { ISBN, bookname, author, checkout_date,  checkin_date};
 }
 
-const rows = [
-  createData(1234567890, "Frankenstein", "Mary Shelly", "04.10.2020", "04.17.2020"),
-  createData(2345678901, "Catch-22", "Joesph Heller", "04.10.2020", "04.17.2020"),
-  createData(3456789012, "Dracula", "Bram Stoker", "04.00.2020", "04.21.2020"),
-  createData(4567890123, "Oliver Twist", "Charles Dickenson", "04.11.2020", "04.18.2020"),
-  createData(5678901234, "Animal Farm", "George Orwell", "04.20.2020", "04.27.2020"),
-];
+function createRows(books){
+  var tempRows= [];
+  if (books){
+    for (var i = 0; i< books.length; i++){
+      tempRows.push(createData(
+        books[i].isbn,
+        books[i].bookname,
+        books[i].author,
+        books[i].shelf_number,
+        books[i].checkout_indicator
+      ));
+    }
+  }
+  return tempRows;
+}
 
 export default function SimpleTable() {
   const classes = useStyles();
+  const user = useSelector((state) => state.fetchResultsReducer.items)
+  const rows = createRows(user);
 
   return (
     <TableContainer component={Paper}>
