@@ -7,6 +7,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import { useSelector } from 'react-redux';
 
 const useStyles = makeStyles({
   table: {
@@ -18,16 +19,33 @@ function createData(ISBN, bookname, author, shelf_number, checkout_indicator) {
   return { ISBN, bookname, author, shelf_number, checkout_indicator };
 }
 
-const rows = [
-  createData(1234567890, "Frankenstein", "Mary Shelly", 1, 0),
-  createData(2345678901, "Catch-22", "Joesph Heller", 3, 0),
-  createData(3456789012, "Dracula", "Bram Stoker", 1, 0),
-  createData(4567890123, "Oliver Twist", "Charles Dickenson", 4, 0),
-  createData(5678901234, "Animal Farm", "George Orwell", 2, 0),
-];
+function isAvailable(checkout_indicator) {
+  if(checkout_indicator === 0) {
+    return "Available";
+  } else if (checkout_indicator === 1) {
+    return "Not Available";
+  }
+}
+
+function createRows(books){
+  var tempRows= [];
+  if (books){
+    for (var i = 0; i< books.length; i++){
+      tempRows.push(createData(
+        books[i].isbn,
+        books[i].bookname,
+        books[i].author,
+        books[i].shelf_number,
+        books[i].checkout_indicator
+      ));
+    }
+  }
+  return tempRows;
+}
 
 export default function SimpleTable() {
   const classes = useStyles();
+  const books = useSelector((state) => state.fetchResultsReducer.items);
 
   return (
     <TableContainer component={Paper}>
@@ -35,22 +53,22 @@ export default function SimpleTable() {
         <TableHead>
           <TableRow>
             <TableCell>ISBN</TableCell>
-            <TableCell align="right">Title</TableCell>
-            <TableCell align="right">Author</TableCell>
-            <TableCell align="right">Shelf Number</TableCell>
-            <TableCell align="right">Is available?</TableCell>
+            <TableCell align="center">Title</TableCell>
+            <TableCell align="center">Author</TableCell>
+            <TableCell align="center">Shelf Number</TableCell>
+            <TableCell align="center">Is available?</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {books.map((row) => (
             <TableRow key={row.name}>
               <TableCell component="th" scope="row">
-                {row.ISBN}
+                {books[0].isbn}
               </TableCell>
-              <TableCell align="right">{row.bookname}</TableCell>
-              <TableCell align="right">{row.author}</TableCell>
-              <TableCell align="right">{row.shelf_number}</TableCell>
-              <TableCell align="right">{row.checkout_indicator}</TableCell>
+              <TableCell align="center">{books[0].bookname}</TableCell>
+              <TableCell align="center">{books[0].author}</TableCell>
+              <TableCell align="center">{books[0].shelf_number}</TableCell>
+              <TableCell align="center">{isAvailable(books[0].checkout_indicator)}</TableCell>
             </TableRow>
           ))}
         </TableBody>

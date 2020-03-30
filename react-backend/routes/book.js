@@ -8,8 +8,7 @@ const connection = mysql.createPool({
   host: config.host,
   user: config.user,
   password: config.password,
-  database: config.database,
-  port: config.port
+  database: config.database
 });
 
 /* GET users listing. */
@@ -20,7 +19,7 @@ router.get("/", function(req, res, next) {
   connection.getConnection(function(err, connection) {
     if (err) throw err
 
-    if (ISBN !== undefined) {
+    if (ISBN !== "undefined") {
         connection.query("SELECT isbn, bookname, author, shelf_number, checkout_indicator from book WHERE ISBN = '" + ISBN + "';", 
         function (err, results) {
           if (err) throw err

@@ -17,7 +17,7 @@ function App() {
   let displayTab;
   if (currentTab === "Student") {
     displayTab = <StudentQuery onSubmit={values=> {
-      axios.get("/", {withCredentials: true})
+      axios.get("/book?ISBN=" + values.ISBN + "&author=" + values.author + "&bookname=" + values.bookname)
       .then(function(response) {
         console.log(response.data);
         dispatch(fetchBooks(response.data))
@@ -29,7 +29,7 @@ function App() {
     }}/>;
   }else if (currentTab === "Librarian") {
     displayTab = <LibrarianQuery onSubmit={values=> {
-      axios.get("/", {withCredentials: true})
+      axios.get("/users?employeeID=" + values.employeeID + "&phone_number=" + values.phonenumber + "&email=" + values.email)
       .then(function(response) {
         console.log(response.data);
         dispatch(fetchUsers(response.data))

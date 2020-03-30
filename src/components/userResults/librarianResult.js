@@ -35,10 +35,10 @@ export default function SimpleTable() {
         <TableHead>
           <TableRow>
             <TableCell>ISBN</TableCell>
-            <TableCell align="right">Title</TableCell>
-            <TableCell align="right">Author</TableCell>
-            <TableCell align="right">Check Out Date</TableCell>
-            <TableCell align="right">Check In Date</TableCell>
+            <TableCell align="center">Title</TableCell>
+            <TableCell align="center">Author</TableCell>
+            <TableCell align="center">Check Out Date</TableCell>
+            <TableCell align="center">Check In Date</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -47,10 +47,10 @@ export default function SimpleTable() {
               <TableCell component="th" scope="row">
                 {row.ISBN}
               </TableCell>
-              <TableCell align="right">{row.bookname}</TableCell>
-              <TableCell align="right">{row.author}</TableCell>
-              <TableCell align="right">{row.checkout_date}</TableCell>
-              <TableCell align="right">{row.checkin_date}</TableCell>
+              <TableCell align="center">{row.bookname}</TableCell>
+              <TableCell align="center">{row.author}</TableCell>
+              <TableCell align="center">{row.checkout_date}</TableCell>
+              <TableCell align="center">{row.checkin_date}</TableCell>
             </TableRow>
           ))}
         </TableBody>
