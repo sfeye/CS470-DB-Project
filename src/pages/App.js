@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import StudentQuery from '../components/student';
 import LibrarianQuery from '../components/librarian';
 import CheckOut from '../components/checkOut';
-import Tab from '../components/tab';
+import Tab from '../components/tabs';
 import StudentResult from '../components/bookResults';
 import LibrarianResult from '../components/userResults';
 import {renderResults, fetchBooks, fetchUsers} from '../rstore/actions'
