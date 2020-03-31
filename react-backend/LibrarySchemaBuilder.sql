@@ -69,9 +69,10 @@ values
 insert into user 
     (firstname, lastname, phone_number, email_address)
 values 
-    ("Sam", "F", "111-111-1111", "test@gmail.com")
+    ("Sam", "F", "1111111111", "test@gmail.com"),
+    ("Pam", "T", "2222222222", "test2@gmail.com")
 
 insert into employee 
-    (firstname, lastname, phone_number, email_address, permissions_level)
+    (userid, firstname, lastname, phone_number, email_address, permissions_level)
 values 
-    ("Pam", "T", "222-222-2222", "test2@gmail.com", 0)
+    (2, "Pam", "T", "2222222222", "test2@gmail.com", 0)
