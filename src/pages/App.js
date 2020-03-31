@@ -61,7 +61,7 @@ function App() {
   if(create === true) {
     displayTab = <CreateUser onSubmit={values=> {
       axios.get("/createUser?firstname=" + values.firstname + "&lastname=" + values.lastname 
-      + "&phone_number=" + values.phonenumber + "&email=" + values.email)
+      + "&phone_number=" + values.phonenumber + "&email_address=" + values.email)
       .then(function(response) {
         window.alert({response});
       })
