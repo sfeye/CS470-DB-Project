@@ -8,7 +8,7 @@ import Tab from '../components/tabs';
 import StudentResult from '../components/bookResults';
 import LibrarianResult from '../components/userResults';
 import CreateUser from '../components/createUser';
-import {renderResults, fetchBooks, fetchUsers, userCreated, createUser} from '../rstore/actions';
+import {renderStudentTab, renderResults, fetchBooks, fetchUsers, userCreated, createUser} from '../rstore/actions';
 
 function App() {
   const axios= require('axios');
@@ -45,14 +45,16 @@ function App() {
     displayTab = <CheckOut onSubmit={values=> {
       axios.get("/users?employeeID=" + values.employeeID + "&phone_number=" + values.phonenumber + "&email_address=" + values.email)
       .then(function(response) {
-        console.log(response.data);
-        dispatch(fetchUsers(response.data))
-        dispatch(renderResults("Librarian"));
+        if(response === "User not found") {
+          dispatch(createUser(values.ISBN))
+        } else {
+          window.alert({response})
+        }
+        dispatch(renderStudentTab());
       })
       .catch(function(error) {
         console.log(error);
       });
-      dispatch(createUser(values.ISBN))
     }}/>;
   }
   if(create === true) {
