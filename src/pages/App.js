@@ -43,11 +43,12 @@ function App() {
     }}/>;
   }else if (currentTab === "Check Out") {
     displayTab = <CheckOut onSubmit={values=> {
-      axios.get("/users?employeeID=" + values.employeeID + "&phone_number=" + values.phonenumber + "&email_address=" + values.email)
+      axios.get("/checkOut?employeeID=" + values.employeeID + "&phone_number=" + values.phonenumber + "&email_address=" + values.email + "&ISBN=" + values.ISBN)
       .then(function(response) {
         if(response === "User not found") {
           dispatch(createUser(values.ISBN))
         } else {
+          // this is to imitate a receipt
           window.alert({response})
         }
         dispatch(renderStudentTab());
@@ -59,6 +60,14 @@ function App() {
   }
   if(create === true) {
     displayTab = <CreateUser onSubmit={values=> {
+      axios.get("/createUser?firstname=" + values.firstname + "&lastname=" + values.lastname 
+      + "&phone_number=" + values.phonenumber + "&email=" + values.email)
+      .then(function(response) {
+        window.alert({response});
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
       dispatch(userCreated());
     }}/>;
   }

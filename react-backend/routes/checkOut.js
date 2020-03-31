@@ -22,7 +22,7 @@ router.get("/", function(req, res, next) {
     connection.getConnection(function(err, connection) {
       if (err) throw err
 
-      connection.query("SELECT employeeid FROM employee WHERE employeeid = '" + employeeid + "';", 
+      connection.query("SELECT employeeid FROM employee WHERE employeeid = '" + employeeID + "';", 
       function (err, results) {
           if (err) throw err
 
