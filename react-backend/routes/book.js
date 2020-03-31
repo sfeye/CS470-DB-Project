@@ -27,7 +27,7 @@ router.get("/", function(req, res, next) {
           return;
       });
     } else if(author !== "undefined" && title === "undefined"){
-      connection.query("SELECT isbn, bookname, author, shelf_number, checkout_indicator from book WHERE author = '" + author + "';", 
+      connection.query("SELECT isbn, bookname, author, shelf_number, checkout_indicator from book WHERE UPPER(author) LIKE UPPER('%" + author + "%');", 
       function (err, results) {
         if (err) throw err
         res.send(results)
@@ -35,7 +35,7 @@ router.get("/", function(req, res, next) {
         return;
       });
     } else if(author === "undefined" && title !== "undefined"){
-        connection.query("SELECT isbn, bookname, author, shelf_number, checkout_indicator from book WHERE bookname = '" + title + "';", 
+        connection.query("SELECT isbn, bookname, author, shelf_number, checkout_indicator from book WHERE UPPER(bookname) LIKE UPPER('%" + title + "%');", 
         function (err, results) {
           if (err) throw err
           res.send(results)
@@ -43,8 +43,8 @@ router.get("/", function(req, res, next) {
           return;
         });
     } else {
-      connection.query("SELECT isbn, bookname, author, shelf_number, checkout_indicator from book WHERE bookname = '" + title + 
-      "' AND author = '" + author + "';", 
+      connection.query("SELECT isbn, bookname, author, shelf_number, checkout_indicator from book WHERE UPPER(bookname) LIKE UPPER('%" + title + 
+      "%') AND UPPER(author) LIKE UPPER('%" + author + "%');", 
         function (err, results) {
           if (err) throw err
           res.send(results)
