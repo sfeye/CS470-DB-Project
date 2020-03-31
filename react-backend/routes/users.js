@@ -26,20 +26,23 @@ router.get("/", function(req, res, next) {
             if (err) throw err
 
             valid = true;
+            console.log(valid);
     });
 
-    connection.query("SELECT userid FROM user WHERE phone_number = '" + phone_number + "' AND email = '" + email + "';", 
+    connection.query("SELECT userid FROM user WHERE phone_number = '" + phone_number + "' AND email_address = '" + email + "';", 
         function (err, results) {
             if (err) throw err
 
             userID = results;
+            console.log(userID);
     });
 
-    if (valid === true && userID !== undefined) {
+    if (valid === true && userID !== []) {
         connection.query("SELECT isbn, bookname, author, checkout_date, checkin_date FROM book_history WHERE checkout_userid = '" + userID + "';", 
         function (err, results) {
           if (err) throw err
-          res.send(results)
+
+          res.send(results);
           return;
       });
     }

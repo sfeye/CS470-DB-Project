@@ -31,7 +31,7 @@ function App() {
     }}/>;
   }else if (currentTab === "Librarian") {
     displayTab = <LibrarianQuery onSubmit={values=> {
-      axios.get("/users?employeeID=" + values.employeeID + "&phone_number=" + values.phonenumber + "&email=" + values.email)
+      axios.get("/users?employeeID=" + values.employeeID + "&phone_number=" + values.phonenumber + "&email_address=" + values.email)
       .then(function(response) {
         console.log(response.data);
         dispatch(fetchUsers(response.data))
@@ -43,6 +43,15 @@ function App() {
     }}/>;
   }else if (currentTab === "Check Out") {
     displayTab = <CheckOut onSubmit={values=> {
+      axios.get("/users?employeeID=" + values.employeeID + "&phone_number=" + values.phonenumber + "&email_address=" + values.email)
+      .then(function(response) {
+        console.log(response.data);
+        dispatch(fetchUsers(response.data))
+        dispatch(renderResults("Librarian"));
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
       dispatch(createUser(values.ISBN))
     }}/>;
   }
