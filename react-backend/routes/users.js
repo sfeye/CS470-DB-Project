@@ -29,7 +29,7 @@ router.get("/", function(req, res, next) {
             console.log(valid);
     });
 
-    connection.query("SELECT userid FROM user WHERE phone_number = '" + phone_number + "' AND email_address = '" + email + "';", 
+    connection.query("SELECT userid FROM user WHERE phone_number = '" + phone_number + "' AND UPPER(email_address) = UPPER('" + email + "');", 
         function (err, results) {
             if (err) throw err
 

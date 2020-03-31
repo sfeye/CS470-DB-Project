@@ -55,4 +55,23 @@ create table book_history
 insert into book 
     (isbn, author, bookname, shelf_number, checkout_indicator)
 values 
-    (1234567890, "Mary Shelley", "Frankenstein", 1, 0);
+    (1234567890, "Mary Shelley", "Frankenstein", 1, 0),
+    (1234567891, "Jane Austen", "Pride and Prejudice", 5, 0),
+    (1234567892, "George Orwell", "Animal Farm", 3, 0),
+    (1234567893, "Herman Melville", "Moby Dick", 3, 0),
+    (1234567894, "Oscar Wilde", "Oliver Twist", 1, 0),
+    (1234567895, "Kurt Vonnegut", "Slaughterhouse Five", 1, 0),
+    (1234567896, "Robert Louis Stevenson", "Treasure Island", 1, 0),
+    (1234567897, "Leo Tolstoy", "Anna Karenina", 1, 0),
+    (1234567898, "Franz Kafka", "The Metamorphosis", 4, 0),
+    (1234567899, "J. R. R. Tolkien", "Lord of the Rings", 1, 0);
+
+insert into user 
+    (firstname, lastname, phone_number, email_address)
+values 
+    ("Sam", "F", "111-111-1111", "test@gmail.com")
+
+insert into employee 
+    (firstname, lastname, phone_number, email_address, permissions_level)
+values 
+    ("Pam", "T", "222-222-2222", "test2@gmail.com", 0)
