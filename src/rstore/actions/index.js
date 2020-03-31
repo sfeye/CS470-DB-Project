@@ -23,9 +23,10 @@ export const fetchUsers = users => ({
   type: types.FETCH_USER_RESULTS,
   payload: {users},
 });
-export function createUser() {
-  return { type: types.CREATE_USER}
-};
+export const createUser = isbn => ({
+  type: types.CREATE_USER,
+  payload: {isbn}
+});
 export function userCreated() {
   return { type: types.USER_CREATED}
 };
