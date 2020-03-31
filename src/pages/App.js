@@ -7,13 +7,15 @@ import CheckOut from '../components/checkOut';
 import Tab from '../components/tabs';
 import StudentResult from '../components/bookResults';
 import LibrarianResult from '../components/userResults';
-import {renderResults, fetchBooks, fetchUsers} from '../rstore/actions'
+import CreateUser from '../components/createUser';
+import {renderResults, fetchBooks, fetchUsers, userCreated} from '../rstore/actions';
 
 function App() {
   const axios= require('axios');
   const dispatch= useDispatch();
   const currentTab = useSelector((state) => state.tabChangeReducer.currentTab );
   const currentPage = useSelector((state) => state.tabChangeReducer.currentPage);
+  const createUser = useSelector((state) => state.createUser.create);
   let displayTab;
   if (currentTab === "Student") {
     displayTab = <StudentQuery onSubmit={values=> {
@@ -41,6 +43,11 @@ function App() {
     }}/>;
   }else if (currentTab === "Check Out") {
     displayTab = <CheckOut onSubmit={values=> {
+    }}/>;
+  }
+  if(createUser === true) {
+    displayTab = <CreateUser onSubmit={values=> {
+      dispatch(userCreated());
     }}/>;
   }
   if(currentPage === "Results") {
