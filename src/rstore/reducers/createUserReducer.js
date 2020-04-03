@@ -1,8 +1,9 @@
 import types from "../constants/action-types";
+import { ActionMarkunreadMailbox } from "material-ui/svg-icons";
 
 const initialState = {
   create: false,
-  isbn: ""
+  items: []
 };
 
 function rootReducer(state = initialState, action) {
@@ -10,13 +11,13 @@ switch(action.type) {
     case types.CREATE_USER: {
         return {
         create: true,
-        isbn: action.payload.isbn
+        items: action.payload.values
         }
     }
     case types.USER_CREATED: {
       return {
       create: false,
-      isbn: ""
+      items: []
       }
   }
     default: return state;

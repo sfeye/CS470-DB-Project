@@ -50,7 +50,7 @@ function App() {
       .then(function(response) {
         if(response.data === "User not found") {
           window.alert(response.data + "... Please create a new account.")
-          dispatch(createUser(values.ISBN))
+          dispatch(createUser(values))
         } else {
           // this is to imitate a receipt
           window.alert(JSON.stringify(response.data))
