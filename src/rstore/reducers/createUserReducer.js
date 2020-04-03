@@ -1,5 +1,4 @@
 import types from "../constants/action-types";
-import { ActionMarkunreadMailbox } from "material-ui/svg-icons";
 
 const initialState = {
   create: false,

@@ -16,39 +16,41 @@ router.get("/", function(req, res, next) {
   var ISBN = req.query.ISBN;
   var author = req.query.author;
   var title = req.query.bookname;
+
   connection.getConnection(function(err, connection) {
     if (err) throw err
 
+    var isbnQuery     =   "SELECT isbn, bookname, author, shelf_number, checkout_indicator from book WHERE ISBN = " + connection.escape(ISBN) + ";";
+    var authorQuery   =   "SELECT isbn, bookname, author, shelf_number, checkout_indicator from book WHERE UPPER(author) LIKE UPPER(" + connection.escape('%' + author + '%') + ");";
+    var titleQuery    =   "SELECT isbn, bookname, author, shelf_number, checkout_indicator from book WHERE UPPER(bookname) LIKE UPPER(" + connection.escape('%' + title + '%') + ");";
+    var bothQuery     =   "SELECT isbn, bookname, author, shelf_number, checkout_indicator from book WHERE UPPER(bookname) LIKE UPPER(" + connection.escape('%' + title + '%') + ") AND UPPER(author) LIKE UPPER(" + connection.escape('%' + author + '%') + ");"
+
     if (ISBN !== "undefined") {
-        connection.query("SELECT isbn, bookname, author, shelf_number, checkout_indicator from book WHERE ISBN = '" + ISBN + "';", 
+        connection.query( isbnQuery, 
         function (err, results) {
           if (err) throw err
           res.send(results)
           return;
       });
     } else if(author !== "undefined" && title === "undefined"){
-      connection.query("SELECT isbn, bookname, author, shelf_number, checkout_indicator from book WHERE UPPER(author) LIKE UPPER('%" + author + "%');", 
+      connection.query( authorQuery,
       function (err, results) {
         if (err) throw err
         res.send(results)
-        console.log(title)
         return;
       });
     } else if(author === "undefined" && title !== "undefined"){
-        connection.query("SELECT isbn, bookname, author, shelf_number, checkout_indicator from book WHERE UPPER(bookname) LIKE UPPER('%" + title + "%');", 
+        connection.query(titleQuery,
         function (err, results) {
           if (err) throw err
           res.send(results)
-          console.log(title)
           return;
         });
     } else {
-      connection.query("SELECT isbn, bookname, author, shelf_number, checkout_indicator from book WHERE UPPER(bookname) LIKE UPPER('%" + title + 
-      "%') AND UPPER(author) LIKE UPPER('%" + author + "%');", 
+      connection.query( bothQuery, 
         function (err, results) {
           if (err) throw err
           res.send(results)
-          console.log(title)
           return;
         });
     }

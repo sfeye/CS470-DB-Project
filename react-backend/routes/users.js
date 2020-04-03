@@ -20,8 +20,10 @@ router.get("/", function(req, res, next) {
   
   connection.getConnection(function(err, connection) {
     if (err) throw err
+    var empQuery     =    "SELECT firstname, lastname FROM employee WHERE employeeid = " + connection.escape(employeeid) + ";"
+    var userQuery    =    "SELECT userid FROM user WHERE phone_number = " + connection.escape(phone_number) + " AND UPPER(email_address) = UPPER(" + connection.escape(email) + ");"
 
-    connection.query("SELECT firstname, lastname FROM employee WHERE employeeid = '" + employeeid + "';", 
+    connection.query(empQuery, 
         function (err, results) {
             if (err) throw err
             if(results.length !== 0) {
@@ -32,8 +34,7 @@ router.get("/", function(req, res, next) {
             }
             console.log(results);
 
-            connection.query("SELECT userid FROM user WHERE phone_number = '" + phone_number + 
-            "' AND UPPER(email_address) = UPPER('" + email + "');", 
+            connection.query(userQuery,
               function (err, results) {
                 if (err) throw err
 

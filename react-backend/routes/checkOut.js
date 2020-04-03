@@ -17,12 +17,14 @@ router.get("/", function(req, res, next) {
     var phone_number = req.query.phone_number;
     var ISBN = req.query.ISBN;
     var valid = false;
-    var userID = [];
 
     connection.getConnection(function(err, connection) {
       if (err) throw err
 
-      connection.query("SELECT firstname, lastname FROM employee WHERE employeeid = '" + employeeID + "';", 
+      var empQuery      =   "SELECT firstname, lastname FROM employee WHERE employeeid = " + connection.escape(employeeID) + ";"
+      var userQuery     =   "SELECT userid FROM user WHERE phone_number = " + connection.escape(phone_number) + " AND UPPER(email_address) = UPPER(" + connection.escape(email) + ");"
+
+      connection.query( empQuery, [employeeID], 
       function (err, results) {
           if (err) throw err
         
@@ -33,18 +35,18 @@ router.get("/", function(req, res, next) {
           }
           console.log(results);
 
-          connection.query("SELECT userid FROM user WHERE phone_number = '" + phone_number + "' AND UPPER(email_address) = UPPER('" + email + "');", 
+          connection.query( userQuery, 
             function (err, results) {
                 if (err) throw err
 
                 if (valid === true) {
                     if (results.length !== 0) {
                         // call check out book procedure
-                        connection.query("CALL CheckOutBook(" + ISBN + ", " + results[0].userid + ");",
+                        connection.query("CALL CheckOutBook(" + connection.escape(ISBN) + ", " + results[0].userid + ");",
                             function (err, results) {
                                 if (err) throw err
 
-                                console.log(results[0])
+                                console.log("HERE!")
                                 res.send(results[0]);
                             });
                         } else {

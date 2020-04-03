@@ -20,8 +20,8 @@ router.get("/", function(req, res, next) {
     connection.getConnection(function(err, connection) {
       if (err) throw err
 
-      connection.query("INSERT INTO user (firstname, lastname, phone_number, email_address)" +
-      " VALUES ('" + firstname + "','" + lastname + "','" +  phone_number + "','" + email + "');", 
+      connection.query("INSERT INTO user (firstname, lastname, phone_number, email_address) VALUES ( ? , ? , ? , ? );", 
+      [firstname, lastname, phone_number, email],
       function (err, results) {
           if (err) throw err
 
