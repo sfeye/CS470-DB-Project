@@ -15,20 +15,22 @@ const useStyles = makeStyles({
   },
 });
 
-function createData(ISBN, bookname, author, checkout_date, checkin_date) {
-  return { ISBN, bookname, author, checkout_date,  checkin_date};
+function createData(userid, firstname, lastname, isbn, author, bookname, checkout_date) {
+  return { userid, firstname, lastname, isbn, author, bookname, checkout_date};
 }
 
-function createRows(books){
+function createRows(user){
   var tempRows= [];
-  if (books){
-    for (var i = 0; i< books.length; i++){
+  if (user){
+    for (var i = 0; i< user.length; i++){
       tempRows.push(createData(
-        books[i].isbn,
-        books[i].bookname,
-        books[i].author,
-        books[i].shelf_number,
-        books[i].checkout_indicator
+        user[i].userid,
+        user[i].firstname,
+        user[i].lastname,
+        user[i].isbn,
+        user[i].author,
+        user[i].bookname,
+        user[i].checkout_date
       ));
     }
   }
@@ -37,7 +39,7 @@ function createRows(books){
 
 export default function SimpleTable() {
   const classes = useStyles();
-  const user = useSelector((state) => state.fetchResultsReducer.items)
+  const user = useSelector((state) => state.fetchResultsReducer.items[0])
   const rows = createRows(user);
 
   return (
@@ -45,23 +47,27 @@ export default function SimpleTable() {
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell>ISBN</TableCell>
+            <TableCell>User ID</TableCell>
+            <TableCell align="center">First Name</TableCell>
+            <TableCell align="center">Last Name</TableCell>
+            <TableCell align="center">ISBN</TableCell>
             <TableCell align="center">Title</TableCell>
             <TableCell align="center">Author</TableCell>
             <TableCell align="center">Check Out Date</TableCell>
-            <TableCell align="center">Check In Date</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {rows.map((row) => (
             <TableRow key={row.name}>
               <TableCell component="th" scope="row">
-                {row.ISBN}
+                {row.userid}
               </TableCell>
-              <TableCell align="center">{row.bookname}</TableCell>
+              <TableCell align="center">{row.firstname}</TableCell>
+              <TableCell align="center">{row.lastname}</TableCell>
+              <TableCell align="center">{row.isbn}</TableCell>
               <TableCell align="center">{row.author}</TableCell>
+              <TableCell align="center">{row.bookname}</TableCell>
               <TableCell align="center">{row.checkout_date}</TableCell>
-              <TableCell align="center">{row.checkin_date}</TableCell>
             </TableRow>
           ))}
         </TableBody>

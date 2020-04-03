@@ -28,6 +28,8 @@ router.get("/", function(req, res, next) {
         
           if(results.length !== 0) {
               valid = true;
+          } else {
+              res.send("Invalid employee ID...");
           }
           console.log(results);
 
@@ -36,15 +38,23 @@ router.get("/", function(req, res, next) {
                 if (err) throw err
 
                 userID = results;
-                console.log(userID.length);
-
+                console.log(userID);
+                console.log(ISBN);
+                console.log(valid);
+                console.log(results.length);
                 if (valid === true) {
                     if (userID.length !== 0) {
                         // call check out book procedure
-                    } else {
-                        res.send("User not found");
+                        connection.query("CALL CheckOutBook(" + ISBN + ", " + userID + ");",
+                            function (err, results) {
+                                if (err) throw err
+
+                                res.send(results);
+                            });
+                        } else {
+                            res.send("User not found");
+                        }
                     }
-                }
             });
         });
     });

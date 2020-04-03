@@ -11,7 +11,7 @@ const connection = mysql.createPool({
   database: config.database
 });
 
-router.post("/", function(req, res, next) {
+router.get("/", function(req, res, next) {
     var firstname = req.query.firstname;
     var lastname = req.query.lastname;
     var phone_number = req.query.phone_number;

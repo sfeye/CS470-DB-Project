@@ -45,11 +45,12 @@ function App() {
     displayTab = <CheckOut onSubmit={values=> {
       axios.get("/checkOut?employeeID=" + values.employeeID + "&phone_number=" + values.phonenumber + "&email_address=" + values.email + "&ISBN=" + values.ISBN)
       .then(function(response) {
-        if(response === "User not found") {
+        if(response.data === "User not found") {
+          window.alert(response.data + "... Please create a new account.")
           dispatch(createUser(values.ISBN))
         } else {
           // this is to imitate a receipt
-          window.alert({response})
+          window.alert(response.data)
         }
         dispatch(renderStudentTab());
       })

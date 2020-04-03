@@ -33,10 +33,11 @@ router.get("/", function(req, res, next) {
             "' AND UPPER(email_address) = UPPER('" + email + "');", 
               function (err, results) {
                 if (err) throw err
-                userID = results;
+                userID = results[0].userid;
+                console.log(userID);
 
                 if (valid === true && userID.length !== 0) {
-                  connection.query("SELECT isbn, bookname, author, checkout_date, checkin_date FROM book_history WHERE checkout_userid = '" + userID + "';", 
+                  connection.query("CALL GetUserCheckedOutBooks(" + userID + ");", 
                   function (err, results) {
                     if (err) throw err
           
