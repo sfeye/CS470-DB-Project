@@ -17,7 +17,7 @@ router.get("/", function(req, res, next) {
   var phone_number = req.query.phone_number;
   var email = req.query.email_address;
   var valid = false;
-  var userID = [];
+  
   connection.getConnection(function(err, connection) {
     if (err) throw err
 
@@ -26,6 +26,9 @@ router.get("/", function(req, res, next) {
             if (err) throw err
             if(results.length !== 0) {
               valid = true;
+            } else{
+              res.send("Invalid eployee ID...")
+              return;
             }
             console.log(results);
 
@@ -33,18 +36,17 @@ router.get("/", function(req, res, next) {
             "' AND UPPER(email_address) = UPPER('" + email + "');", 
               function (err, results) {
                 if (err) throw err
-                userID = results[0].userid;
-                console.log(userID);
 
-                if (valid === true && userID.length !== 0) {
-                  connection.query("CALL GetUserCheckedOutBooks(" + userID + ");", 
+                if (valid === true && results.length !== 0) {
+                  connection.query("CALL GetUserCheckedOutBooks(" + results[0].userid + ");", 
                   function (err, results) {
                     if (err) throw err
           
                     res.send(results);
-                    console.log(results);
                     return;
                   });
+                } else {
+                  res.send("User not found...");
                 }
         });
     });

@@ -37,19 +37,15 @@ router.get("/", function(req, res, next) {
             function (err, results) {
                 if (err) throw err
 
-                userID = results;
-                console.log(userID);
-                console.log(ISBN);
-                console.log(valid);
-                console.log(results.length);
                 if (valid === true) {
-                    if (userID.length !== 0) {
+                    if (results.length !== 0) {
                         // call check out book procedure
-                        connection.query("CALL CheckOutBook(" + ISBN + ", " + userID + ");",
+                        connection.query("CALL CheckOutBook(" + ISBN + ", " + results[0].userid + ");",
                             function (err, results) {
                                 if (err) throw err
 
-                                res.send(results);
+                                console.log(results[0])
+                                res.send(results[0]);
                             });
                         } else {
                             res.send("User not found");

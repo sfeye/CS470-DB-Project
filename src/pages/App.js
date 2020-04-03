@@ -33,9 +33,12 @@ function App() {
     displayTab = <LibrarianQuery onSubmit={values=> {
       axios.get("/users?employeeID=" + values.employeeID + "&phone_number=" + values.phonenumber + "&email_address=" + values.email)
       .then(function(response) {
-        console.log(response.data);
-        dispatch(fetchUsers(response.data))
-        dispatch(renderResults("Librarian"));
+        if(response.data === "Invalid eployee ID..." || response.data === "User not found...") {
+          window.alert(JSON.stringify(response.data))
+        } else {
+          dispatch(fetchUsers(response.data))
+          dispatch(renderResults("Librarian"));
+        }
       })
       .catch(function(error) {
         console.log(error);
@@ -50,7 +53,7 @@ function App() {
           dispatch(createUser(values.ISBN))
         } else {
           // this is to imitate a receipt
-          window.alert(response.data)
+          window.alert(JSON.stringify(response.data))
         }
         dispatch(renderStudentTab());
       })
@@ -64,7 +67,7 @@ function App() {
       axios.get("/createUser?firstname=" + values.firstname + "&lastname=" + values.lastname 
       + "&phone_number=" + values.phonenumber + "&email_address=" + values.email)
       .then(function(response) {
-        window.alert({response});
+        window.alert(JSON.stringify(response.data));
       })
       .catch(function(error) {
         console.log(error);
