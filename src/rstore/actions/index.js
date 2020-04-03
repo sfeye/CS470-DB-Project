@@ -10,6 +10,9 @@ export function renderLibrarianTab() {
 export function renderCheckOutTab() {
   return { type: types.CHECKOUT_TAB}
 };
+export function renderCheckInTab() {
+  return { type: types.CHECKIN_TAB}
+};
 export const renderResults = prevTab => ({
    type: types.SEARCH_RESULTS,
    payload: {prevTab},

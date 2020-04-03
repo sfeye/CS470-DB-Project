@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import StudentQuery from '../components/student';
 import LibrarianQuery from '../components/librarian';
 import CheckOut from '../components/checkOut';
+import CheckIn from '../components/checkIn';
 import Tab from '../components/tabs';
 import StudentResult from '../components/bookResults';
 import LibrarianResult from '../components/userResults';
@@ -55,6 +56,18 @@ function App() {
           // this is to imitate a receipt
           window.alert(JSON.stringify(response.data))
         }
+        dispatch(renderStudentTab());
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+    }}/>;
+  }else if (currentTab === "Check In") {
+    displayTab = <CheckIn onSubmit={values=> {
+      axios.get("/checkIn?employeeID=" + values.employeeID + "&ISBN=" + values.ISBN)
+      .then(function(response) {
+        // this is to imitate a receipt
+        window.alert(JSON.stringify(response.data))
         dispatch(renderStudentTab());
       })
       .catch(function(error) {

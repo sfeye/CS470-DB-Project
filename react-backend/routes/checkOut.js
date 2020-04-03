@@ -24,7 +24,7 @@ router.get("/", function(req, res, next) {
       var empQuery      =   "SELECT firstname, lastname FROM employee WHERE employeeid = " + connection.escape(employeeID) + ";"
       var userQuery     =   "SELECT userid FROM user WHERE phone_number = " + connection.escape(phone_number) + " AND UPPER(email_address) = UPPER(" + connection.escape(email) + ");"
 
-      connection.query( empQuery, [employeeID], 
+      connection.query( empQuery, 
       function (err, results) {
           if (err) throw err
         
@@ -46,7 +46,6 @@ router.get("/", function(req, res, next) {
                             function (err, results) {
                                 if (err) throw err
 
-                                console.log("HERE!")
                                 res.send(results[0]);
                             });
                         } else {
