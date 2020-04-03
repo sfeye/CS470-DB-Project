@@ -11,7 +11,7 @@ const connection = mysql.createPool({
   database: config.database
 });
 
-router.get("/", function(req, res, next) {
+router.post("/", function(req, res, next) {
     var firstname = req.query.firstname;
     var lastname = req.query.lastname;
     var phone_number = req.query.phone_number;
@@ -25,7 +25,8 @@ router.get("/", function(req, res, next) {
       function (err, results) {
           if (err) throw err
 
-          res.send("User created successfully!")
+          console.log(results);
+          res.send("User created successfully!");
         });
     });
 });
