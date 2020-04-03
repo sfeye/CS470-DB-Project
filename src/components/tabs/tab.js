@@ -1,7 +1,5 @@
 import React from 'react';
-import {renderStudentTab} from '../../rstore/actions';
-import {renderLibrarianTab} from '../../rstore/actions';
-import {renderCheckOutTab} from '../../rstore/actions';
+import {renderStudentTab, renderLibrarianTab, renderCheckOutTab, userCreated} from '../../rstore/actions';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
@@ -56,6 +54,7 @@ export default function tab() {
     if(newValue === 2) {
       dispatch(renderCheckOutTab());
     }
+    dispatch(userCreated())
   };
 
   return (

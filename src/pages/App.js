@@ -4,16 +4,18 @@ import { useDispatch, useSelector } from 'react-redux';
 import StudentQuery from '../components/student';
 import LibrarianQuery from '../components/librarian';
 import CheckOut from '../components/checkOut';
-import Tab from '../components/tab';
+import Tab from '../components/tabs';
 import StudentResult from '../components/bookResults';
 import LibrarianResult from '../components/userResults';
-import {renderResults, fetchBooks, fetchUsers} from '../rstore/actions'
+import CreateUser from '../components/createUser';
+import {renderStudentTab, renderResults, fetchBooks, fetchUsers, userCreated, createUser} from '../rstore/actions';
 
 function App() {
   const axios= require('axios');
   const dispatch= useDispatch();
   const currentTab = useSelector((state) => state.tabChangeReducer.currentTab );
   const currentPage = useSelector((state) => state.tabChangeReducer.currentPage);
+  const create = useSelector((state) => state.createUserReducer.create);
   let displayTab;
   if (currentTab === "Student") {
     displayTab = <StudentQuery onSubmit={values=> {
@@ -29,7 +31,7 @@ function App() {
     }}/>;
   }else if (currentTab === "Librarian") {
     displayTab = <LibrarianQuery onSubmit={values=> {
-      axios.get("/users?employeeID=" + values.employeeID + "&phone_number=" + values.phonenumber + "&email=" + values.email)
+      axios.get("/users?employeeID=" + values.employeeID + "&phone_number=" + values.phonenumber + "&email_address=" + values.email)
       .then(function(response) {
         console.log(response.data);
         dispatch(fetchUsers(response.data))
@@ -41,6 +43,32 @@ function App() {
     }}/>;
   }else if (currentTab === "Check Out") {
     displayTab = <CheckOut onSubmit={values=> {
+      axios.get("/checkOut?employeeID=" + values.employeeID + "&phone_number=" + values.phonenumber + "&email_address=" + values.email + "&ISBN=" + values.ISBN)
+      .then(function(response) {
+        if(response === "User not found") {
+          dispatch(createUser(values.ISBN))
+        } else {
+          // this is to imitate a receipt
+          window.alert({response})
+        }
+        dispatch(renderStudentTab());
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+    }}/>;
+  }
+  if(create === true) {
+    displayTab = <CreateUser onSubmit={values=> {
+      axios.get("/createUser?firstname=" + values.firstname + "&lastname=" + values.lastname 
+      + "&phone_number=" + values.phonenumber + "&email_address=" + values.email)
+      .then(function(response) {
+        window.alert({response});
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+      dispatch(userCreated());
     }}/>;
   }
   if(currentPage === "Results") {

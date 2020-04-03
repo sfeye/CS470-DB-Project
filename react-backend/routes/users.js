@@ -14,35 +14,39 @@ const connection = mysql.createPool({
 /* GET users listing. */
 router.get("/", function(req, res, next) {
   var employeeid = req.query.employeeID;
-  var phone_number = req.query.phonenumber;
-  var email = req.query.email;
+  var phone_number = req.query.phone_number;
+  var email = req.query.email_address;
   var valid = false;
-  var userID;
+  var userID = [];
   connection.getConnection(function(err, connection) {
     if (err) throw err
 
-    connection.query("SELECT employeeid FROM employee WHERE employeeid = '" + employeeid + "';", 
+    connection.query("SELECT firstname, lastname FROM employee WHERE employeeid = '" + employeeid + "';", 
         function (err, results) {
             if (err) throw err
+            if(results.length !== 0) {
+              valid = true;
+            }
+            console.log(results);
 
-            valid = true;
+            connection.query("SELECT userid FROM user WHERE phone_number = '" + phone_number + 
+            "' AND UPPER(email_address) = UPPER('" + email + "');", 
+              function (err, results) {
+                if (err) throw err
+                userID = results;
+
+                if (valid === true && userID.length !== 0) {
+                  connection.query("SELECT isbn, bookname, author, checkout_date, checkin_date FROM book_history WHERE checkout_userid = '" + userID + "';", 
+                  function (err, results) {
+                    if (err) throw err
+          
+                    res.send(results);
+                    console.log(results);
+                    return;
+                  });
+                }
+        });
     });
-
-    connection.query("SELECT userid FROM user WHERE phone_number = '" + phone_number + "' AND email = '" + email + "';", 
-        function (err, results) {
-            if (err) throw err
-
-            userID = results;
-    });
-
-    if (valid === true && userID !== undefined) {
-        connection.query("SELECT isbn, bookname, author, checkout_date, checkin_date FROM book_history WHERE checkout_userid = '" + userID + "';", 
-        function (err, results) {
-          if (err) throw err
-          res.send(results)
-          return;
-      });
-    }
   });
 });
 

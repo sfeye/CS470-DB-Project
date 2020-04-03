@@ -46,6 +46,7 @@ function createRows(books){
 export default function SimpleTable() {
   const classes = useStyles();
   const books = useSelector((state) => state.fetchResultsReducer.items);
+  const rows = createRows(books);
 
   return (
     <TableContainer component={Paper}>
@@ -60,15 +61,15 @@ export default function SimpleTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {books.map((row) => (
+          {rows.map((row) => (
             <TableRow key={row.name}>
               <TableCell component="th" scope="row">
-                {books[0].isbn}
+                {row.ISBN}
               </TableCell>
-              <TableCell align="center">{books[0].bookname}</TableCell>
-              <TableCell align="center">{books[0].author}</TableCell>
-              <TableCell align="center">{books[0].shelf_number}</TableCell>
-              <TableCell align="center">{isAvailable(books[0].checkout_indicator)}</TableCell>
+              <TableCell align="center">{row.bookname}</TableCell>
+              <TableCell align="center">{row.author}</TableCell>
+              <TableCell align="center">{row.shelf_number}</TableCell>
+              <TableCell align="center">{isAvailable(row.checkout_indicator)}</TableCell>
             </TableRow>
           ))}
         </TableBody>

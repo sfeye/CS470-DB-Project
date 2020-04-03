@@ -26,15 +26,31 @@ router.get("/", function(req, res, next) {
           res.send(results)
           return;
       });
-    } else {
-      connection.query("SELECT isbn, bookname, author, shelf_number, checkout_indicator from book WHERE bookname = '" + title + 
-      "' AND author = '" + author + "';", 
+    } else if(author !== "undefined" && title === "undefined"){
+      connection.query("SELECT isbn, bookname, author, shelf_number, checkout_indicator from book WHERE UPPER(author) LIKE UPPER('%" + author + "%');", 
       function (err, results) {
         if (err) throw err
         res.send(results)
         console.log(title)
         return;
       });
+    } else if(author === "undefined" && title !== "undefined"){
+        connection.query("SELECT isbn, bookname, author, shelf_number, checkout_indicator from book WHERE UPPER(bookname) LIKE UPPER('%" + title + "%');", 
+        function (err, results) {
+          if (err) throw err
+          res.send(results)
+          console.log(title)
+          return;
+        });
+    } else {
+      connection.query("SELECT isbn, bookname, author, shelf_number, checkout_indicator from book WHERE UPPER(bookname) LIKE UPPER('%" + title + 
+      "%') AND UPPER(author) LIKE UPPER('%" + author + "%');", 
+        function (err, results) {
+          if (err) throw err
+          res.send(results)
+          console.log(title)
+          return;
+        });
     }
   });
 });
