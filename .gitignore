@@ -2,6 +2,8 @@
 
 # dependencies
 /node_modules
+/react-backend/node_modules
+/react-backend/config
 
 # testing
 /coverage
@@ -15,9 +17,3 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-
-# db config
-/react-backend/config.js
-# if this doesn't gitignore your password then type into the terminal below:
-# cd react-backend
-# git update-index --assume-unchanged config.js 

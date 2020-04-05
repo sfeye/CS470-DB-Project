@@ -25,6 +25,12 @@ function rootReducer(state = initialState, action) {
         currentPage: "Query"
       }
     }
+    case types.CHECKIN_TAB: {
+      return {
+        currentTab: "Check In",
+        currentPage: "Query"
+      }
+    }
     case types.SEARCH_RESULTS: {
       return {
         currentTab: action.payload.prevTab,

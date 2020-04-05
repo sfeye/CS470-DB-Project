@@ -1,5 +1,5 @@
 import React from 'react';
-import {renderStudentTab, renderLibrarianTab, renderCheckOutTab, userCreated} from '../../rstore/actions';
+import {renderStudentTab, renderLibrarianTab, renderCheckOutTab, renderCheckInTab, userCreated} from '../../rstore/actions';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
@@ -54,6 +54,9 @@ export default function tab() {
     if(newValue === 2) {
       dispatch(renderCheckOutTab());
     }
+    if(newValue === 3) {
+      dispatch(renderCheckInTab());
+    }
     dispatch(userCreated())
   };
 
@@ -63,7 +66,8 @@ export default function tab() {
         <Tabs value={value} onChange={handleChange} centered>
           <Tab label="Student" />
           <Tab label="Librarian" />
-          <Tab label="Check out"/>
+          <Tab label="Check Out"/>
+          <Tab label="Return Book"/>
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
@@ -71,6 +75,8 @@ export default function tab() {
       <TabPanel value={value} index={1}>
       </TabPanel>
       <TabPanel value={value} index={2}>
+      </TabPanel>
+      <TabPanel value={value} index={3}>
       </TabPanel>
     </div>
   );

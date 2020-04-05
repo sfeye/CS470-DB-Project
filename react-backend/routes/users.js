@@ -1,7 +1,7 @@
 var express = require("express");
 var router = express.Router();
 var mysql = require("mysql");
-var config = require("../config");
+var config = require("../config/config");
 var bodyParser = require("body-parser");
 
 const connection = mysql.createPool({
@@ -17,33 +17,37 @@ router.get("/", function(req, res, next) {
   var phone_number = req.query.phone_number;
   var email = req.query.email_address;
   var valid = false;
-  var userID = [];
+  
   connection.getConnection(function(err, connection) {
     if (err) throw err
+    var empQuery     =    "SELECT firstname, lastname FROM employee WHERE employeeid = " + connection.escape(employeeid) + ";"
+    var userQuery    =    "SELECT userid FROM user WHERE phone_number = " + connection.escape(phone_number) + " AND UPPER(email_address) = UPPER(" + connection.escape(email) + ");"
 
-    connection.query("SELECT firstname, lastname FROM employee WHERE employeeid = '" + employeeid + "';", 
+    connection.query(empQuery, 
         function (err, results) {
             if (err) throw err
             if(results.length !== 0) {
               valid = true;
+            } else{
+              res.send("Invalid eployee ID...")
+              return;
             }
             console.log(results);
 
-            connection.query("SELECT userid FROM user WHERE phone_number = '" + phone_number + 
-            "' AND UPPER(email_address) = UPPER('" + email + "');", 
+            connection.query(userQuery,
               function (err, results) {
                 if (err) throw err
-                userID = results;
 
-                if (valid === true && userID.length !== 0) {
-                  connection.query("SELECT isbn, bookname, author, checkout_date, checkin_date FROM book_history WHERE checkout_userid = '" + userID + "';", 
+                if (valid === true && results.length !== 0) {
+                  connection.query("CALL GetUserCheckedOutBooks(" + results[0].userid + ");", 
                   function (err, results) {
                     if (err) throw err
           
                     res.send(results);
-                    console.log(results);
                     return;
                   });
+                } else {
+                  res.send("User not found...");
                 }
         });
     });

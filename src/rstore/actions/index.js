@@ -10,6 +10,9 @@ export function renderLibrarianTab() {
 export function renderCheckOutTab() {
   return { type: types.CHECKOUT_TAB}
 };
+export function renderCheckInTab() {
+  return { type: types.CHECKIN_TAB}
+};
 export const renderResults = prevTab => ({
    type: types.SEARCH_RESULTS,
    payload: {prevTab},
@@ -23,9 +26,9 @@ export const fetchUsers = users => ({
   type: types.FETCH_USER_RESULTS,
   payload: {users},
 });
-export const createUser = isbn => ({
+export const createUser = values => ({
   type: types.CREATE_USER,
-  payload: {isbn}
+  payload: {values}
 });
 export function userCreated() {
   return { type: types.USER_CREATED}

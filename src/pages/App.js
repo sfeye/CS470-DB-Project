@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import StudentQuery from '../components/student';
 import LibrarianQuery from '../components/librarian';
 import CheckOut from '../components/checkOut';
+import CheckIn from '../components/checkIn';
 import Tab from '../components/tabs';
 import StudentResult from '../components/bookResults';
 import LibrarianResult from '../components/userResults';
@@ -33,9 +34,12 @@ function App() {
     displayTab = <LibrarianQuery onSubmit={values=> {
       axios.get("/users?employeeID=" + values.employeeID + "&phone_number=" + values.phonenumber + "&email_address=" + values.email)
       .then(function(response) {
-        console.log(response.data);
-        dispatch(fetchUsers(response.data))
-        dispatch(renderResults("Librarian"));
+        if(response.data === "Invalid eployee ID..." || response.data === "User not found...") {
+          window.alert(JSON.stringify(response.data))
+        } else {
+          dispatch(fetchUsers(response.data))
+          dispatch(renderResults("Librarian"));
+        }
       })
       .catch(function(error) {
         console.log(error);
@@ -45,12 +49,25 @@ function App() {
     displayTab = <CheckOut onSubmit={values=> {
       axios.get("/checkOut?employeeID=" + values.employeeID + "&phone_number=" + values.phonenumber + "&email_address=" + values.email + "&ISBN=" + values.ISBN)
       .then(function(response) {
-        if(response === "User not found") {
-          dispatch(createUser(values.ISBN))
+        if(response.data === "User not found") {
+          window.alert(response.data + "... Please create a new account.")
+          dispatch(createUser(values))
         } else {
           // this is to imitate a receipt
-          window.alert({response})
+          window.alert(JSON.stringify(response.data))
         }
+        dispatch(renderStudentTab());
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+    }}/>;
+  }else if (currentTab === "Check In") {
+    displayTab = <CheckIn onSubmit={values=> {
+      axios.get("/checkIn?employeeID=" + values.employeeID + "&ISBN=" + values.ISBN)
+      .then(function(response) {
+        // this is to imitate a receipt
+        window.alert(JSON.stringify(response.data))
         dispatch(renderStudentTab());
       })
       .catch(function(error) {
@@ -63,7 +80,7 @@ function App() {
       axios.get("/createUser?firstname=" + values.firstname + "&lastname=" + values.lastname 
       + "&phone_number=" + values.phonenumber + "&email_address=" + values.email)
       .then(function(response) {
-        window.alert({response});
+        window.alert(JSON.stringify(response.data));
       })
       .catch(function(error) {
         console.log(error);

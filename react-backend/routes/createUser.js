@@ -1,7 +1,7 @@
 var express = require("express");
 var router = express.Router();
 var mysql = require("mysql");
-var config = require("../config");
+var config = require("../config/config");
 var bodyParser = require("body-parser");
 
 const connection = mysql.createPool({
@@ -11,7 +11,7 @@ const connection = mysql.createPool({
   database: config.database
 });
 
-router.post("/", function(req, res, next) {
+router.get("/", function(req, res, next) {
     var firstname = req.query.firstname;
     var lastname = req.query.lastname;
     var phone_number = req.query.phone_number;
@@ -20,8 +20,8 @@ router.post("/", function(req, res, next) {
     connection.getConnection(function(err, connection) {
       if (err) throw err
 
-      connection.query("INSERT INTO user (firstname, lastname, phone_number, email_address)" +
-      " VALUES ('" + firstname + "','" + lastname + "','" +  phone_number + "','" + email + "');", 
+      connection.query("INSERT INTO user (firstname, lastname, phone_number, email_address) VALUES ( ? , ? , ? , ? );", 
+      [firstname, lastname, phone_number, email],
       function (err, results) {
           if (err) throw err
 
