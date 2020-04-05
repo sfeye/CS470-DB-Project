@@ -2,7 +2,7 @@ var config = {
     host: "localhost",
     user: "root",
     // change this to your password
-    password: "beamer08271996",
+    password: "",
     database: "library"
   };
   module.exports = config;
