@@ -18,7 +18,4 @@ yarn-debug.log*
 yarn-error.log*
 
 # db config
-#/react-backend/config
-# if this doesn't gitignore your password then type into the terminal below:
-# cd react-backend
-# git update-index --assume-unchanged config.js 
+/react-backend/config
