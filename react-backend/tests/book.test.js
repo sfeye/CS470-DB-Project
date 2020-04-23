@@ -42,7 +42,7 @@ describe("Books", () => {
                 .get('/book?author=AAAAAAAAAA')
                 .end((err, res) => {
                     res.should.have.status(200);
-                    res.body.should.not.be.a('object');
+                    res.body.should.be.a('array').and.be.empty;
                     done();
                  });
         });
