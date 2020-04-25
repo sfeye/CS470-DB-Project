@@ -9,8 +9,6 @@ const renderTextField = (
     <TextField
       label={label}
       variant="filled"
-      hintText={label}
-      floatingLabelText={label}
       helperText={touched && error}
       {...input}
       {...custom}
