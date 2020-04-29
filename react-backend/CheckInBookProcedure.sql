@@ -1,9 +1,10 @@
+drop procedure if exists checkinbook;
 DELIMITER //
-
-CREATE PROCEDURE CheckInBook (book_isbn int)
+CREATE PROCEDURE CheckInBook (book_isbn varchar(20))
 BEGIN
 DECLARE checked_out int;
 declare book_userid int;
+declare bookhistory_id int;
 
 select checkout_indicator from book where isbn = book_isbn into checked_out;
 select userid from user join book on userid = checkout_userid where book_isbn = isbn into book_userid;
@@ -11,23 +12,23 @@ select userid from user join book on userid = checkout_userid where book_isbn = 
 if checked_out = 1 then
 	update book
 		set
-			checkout_userid = book_userid,
-            checkout_indicator = 0,
-            checkin_date = CURDATE()
+			checkout_userid = null,
+            checkout_indicator = 0
 	where isbn = book_isbn;
     
-    insert into book_history (isbn, author, bookname, shelf_number, checkout_userid, checkout_date, checkin_date, checkout_indicator)
+    insert into book_history (isbn, checkout_userid, checkout_indicator)
 			Select
 				isbn as isbn,
-                author as author,
-                bookname as bookname,
-                shelf_number as shelf_number,
                 checkout_userid as checkout_userid,
-                checkout_date as checkout_date,
-                checkin_date as checkin_date,
                 checkout_indicator as checkout_indicator
                 From book
                 where isbn = book_isbn;
+	select last_insert_id() into bookhistory_id;
+    update book_history
+		set
+			checkin_date = curdate()
+		where
+			book_history.historyid = bookhistory_id;
 end if;
 
 if checked_out = 0 then

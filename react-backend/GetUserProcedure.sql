@@ -1,3 +1,4 @@
+drop procedure if exists getuser;
 DELIMITER //
 
 CREATE PROCEDURE GetUser (user_id int)
