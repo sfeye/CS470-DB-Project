@@ -37,7 +37,7 @@ router.get("/", function(req, res, next) {
                     function (err, results) {
                         if (err) throw err
 
-                        res.send(results);
+                        res.send("Book was successfully checked in!");
                     });
                 }
             });
