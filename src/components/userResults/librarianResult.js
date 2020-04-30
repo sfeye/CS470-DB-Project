@@ -65,8 +65,8 @@ export default function SimpleTable() {
               <TableCell align="center">{row.firstname}</TableCell>
               <TableCell align="center">{row.lastname}</TableCell>
               <TableCell align="center">{row.isbn}</TableCell>
-              <TableCell align="center">{row.author}</TableCell>
               <TableCell align="center">{row.bookname}</TableCell>
+              <TableCell align="center">{row.author}</TableCell>
               <TableCell align="center">{row.checkout_date}</TableCell>
             </TableRow>
           ))}

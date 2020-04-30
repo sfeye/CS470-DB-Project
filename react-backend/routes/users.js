@@ -20,7 +20,7 @@ router.get("/", function(req, res, next) {
   
   connection.getConnection(function(err, connection) {
     if (err) throw err
-    var empQuery     =    "SELECT firstname, lastname FROM employee WHERE employeeid = " + connection.escape(employeeid) + ";"
+    var empQuery     =    "SELECT * FROM employee WHERE employeeid = " + connection.escape(employeeid) + ";"
     var userQuery    =    "SELECT userid FROM user WHERE phone_number = " + connection.escape(phone_number) + " AND UPPER(email_address) = UPPER(" + connection.escape(email) + ");"
 
     connection.query(empQuery, 
