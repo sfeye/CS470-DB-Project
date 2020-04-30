@@ -13,22 +13,19 @@ if checked_out = 1 then
 	update book
 		set
 			checkout_userid = null,
-            checkout_indicator = 0
+            checkout_indicator = 0,
+            checkin_date = curdate()
 	where isbn = book_isbn;
     
-    insert into book_history (isbn, checkout_userid, checkout_indicator)
+    insert into book_history (isbn, checkout_userid, checkout_date, checkin_date, checkout_indicator)
 			Select
 				isbn as isbn,
                 checkout_userid as checkout_userid,
+                checkout_date as checkout_date,
+                checkin_date as checkin_date,
                 checkout_indicator as checkout_indicator
                 From book
                 where isbn = book_isbn;
-	select last_insert_id() into bookhistory_id;
-    update book_history
-		set
-			checkin_date = curdate()
-		where
-			book_history.historyid = bookhistory_id;
 end if;
 
 if checked_out = 0 then

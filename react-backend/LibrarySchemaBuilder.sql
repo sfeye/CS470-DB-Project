@@ -32,6 +32,8 @@ create table book
     author varchar(100),
     bookname varchar(100),
     shelf_number int not null,
+	checkout_date date,
+    checkin_date date,
     checkout_indicator int NOT NULL,
     checkout_userid int,
     libraryid int not null,
@@ -94,5 +96,4 @@ insert into employee
     (userid, permissions_level, libraryid)
 values 
     (2, 0, 1);
-
 
