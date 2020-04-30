@@ -19,7 +19,7 @@ router.get("/", function(req, res, next) {
     connection.getConnection(function(err, connection) {
         if (err) throw err
 
-        var empQuery    =   "SELECT firstname, lastname FROM employee WHERE employeeid = " + connection.escape(employeeID) + ";"
+        var empQuery    =   "SELECT * FROM employee WHERE employeeid = " + connection.escape(employeeID) + ";"
 
         connection.query( empQuery, 
             function (err, results) {
@@ -37,7 +37,7 @@ router.get("/", function(req, res, next) {
                     function (err, results) {
                         if (err) throw err
 
-                        res.send(results);
+                        res.send("Book was successfully checked in!");
                     });
                 }
             });

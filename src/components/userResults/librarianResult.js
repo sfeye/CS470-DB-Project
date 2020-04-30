@@ -8,6 +8,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { useSelector } from 'react-redux';
+import moment from 'moment';
 
 const useStyles = makeStyles({
   table: {
@@ -30,7 +31,7 @@ function createRows(user){
         user[i].isbn,
         user[i].author,
         user[i].bookname,
-        user[i].checkout_date
+        moment(user[i].checkout_date).format("MM/DD/YYYY")
       ));
     }
   }
@@ -65,8 +66,8 @@ export default function SimpleTable() {
               <TableCell align="center">{row.firstname}</TableCell>
               <TableCell align="center">{row.lastname}</TableCell>
               <TableCell align="center">{row.isbn}</TableCell>
-              <TableCell align="center">{row.author}</TableCell>
               <TableCell align="center">{row.bookname}</TableCell>
+              <TableCell align="center">{row.author}</TableCell>
               <TableCell align="center">{row.checkout_date}</TableCell>
             </TableRow>
           ))}
