@@ -16,8 +16,8 @@ const useStyles = makeStyles({
   },
 });
 
-function createData(userid, firstname, lastname, isbn, author, bookname, checkout_date) {
-  return { userid, firstname, lastname, isbn, author, bookname, checkout_date};
+function createData(userid, firstname, lastname, isbn, author, bookname, checkout_date, due_date) {
+  return { userid, firstname, lastname, isbn, author, bookname, checkout_date, due_date};
 }
 
 function createRows(user){
@@ -31,7 +31,8 @@ function createRows(user){
         user[i].isbn,
         user[i].author,
         user[i].bookname,
-        moment(user[i].checkout_date).format("MM/DD/YYYY")
+        moment(user[i].checkout_date).format("MM/DD/YYYY"),
+        moment(user[i].due_date).format("MM/DD/YYYY")
       ));
     }
   }
@@ -55,6 +56,7 @@ export default function SimpleTable() {
             <TableCell align="center">Title</TableCell>
             <TableCell align="center">Author</TableCell>
             <TableCell align="center">Check Out Date</TableCell>
+            <TableCell align="center">Due Date</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -69,6 +71,7 @@ export default function SimpleTable() {
               <TableCell align="center">{row.bookname}</TableCell>
               <TableCell align="center">{row.author}</TableCell>
               <TableCell align="center">{row.checkout_date}</TableCell>
+              <TableCell align="center">{row.due_date}</TableCell>
             </TableRow>
           ))}
         </TableBody>
