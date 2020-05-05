@@ -51,6 +51,7 @@ const createUser = props => {
                     </div>
                     <div style={{padding: "10px"}}>
                         <button
+                        className="submit-btn"
                         type="submit"
                         disabled={ pristine || submitting}
                         >
