@@ -25,6 +25,8 @@ if checked_out = 0 then
                 checkout_indicator as checkout_indicator
                 From book
                 where isbn = book_isbn;
+
+    Select 'Book was successfully checked out to', firstname, lastname from user where userid = user_id;
 end if;
 
 if checked_out = 1 then
